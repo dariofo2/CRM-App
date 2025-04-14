@@ -7,6 +7,7 @@
         $phone=null;
         $enterprise=null;
         $address=null;
+        $date=null;
 
         if (isset($_POST['id'])) $id=$_POST['id'];
         if (isset($_POST['name'])) $name=$_POST['name'];
@@ -16,7 +17,6 @@
         if (isset($_POST['address'])) $address=$_POST['address'];
         if (isset($_POST['date'])) $date=new DateTime($_POST['date']);
 
-        echo $id;
         $customerReq=new Customer($id,$name,$surname,$phone,$enterprise,$address,$date,[]);
 
         return $customerReq;

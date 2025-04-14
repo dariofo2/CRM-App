@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers</title>
+    <script src="../../components/jquery-3.7.1.js"></script>
+    <script src="../../components/fetchs/fetchs.js"></script>
+    <script src="../../components/cookies/cookies.js"></script>
+</head>
+
+<body>
+    <div id="navbar">
+
+    </div>
+    <div id="create">
+        <form id="formCreate">
+            <input type="text" name="name" placeholder="name">
+            <input type="text" name="surname" placeholder="surname">
+            <input type="text" name="enterprise" placeholder="enterprise">
+            <input type="text" name="address" placeholder="address">
+            <input type="text" name="phone" placeholder="phone">
+            <input type="date" name="date" placeholder="date">
+            <input type="submit" value="create">
+        </form>
+    </div>
+    <div>
+        <h2>Filter by Year</h2>
+        <input id="year" type="number" value="2025" name="year">
+        <button id="filter" >Filter</button>
+    </div>
+    <div id="root"></div>
+    <footer id="footer"></footer>
+
+    <script>
+        let customers = [];
+        let customersElement = $("root");
+
+        async function fetchCustomers() {
+            customers = await AJAXFetchs.selectCustomers();
+            console.log(customers);
+            refreshCustomers();
+        }
+
+        async function fetchCustomersByYear() {
+            const year=$('#year').val();
+            
+            const date=new Date(`${year}-5-5`);
+            const formData=new FormData();
+
+            formData.set("date",date.toISOString());
+            customers=await AJAXFetchs.selectCustomersByYear(formData);
+            
+            refreshCustomers();
+        }
+
+        $(document).ready(() => {
+            fetchCustomers();
+
+            $("#formCreate").submit(async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                await AJAXFetchs.insertCustomer(formData);
+                location.reload();
+            })
+
+            $('#filter').click(()=>{
+                fetchCustomersByYear();
+            })
+
+            //NavBar
+            $('#navbar').load("../../components/navbar/navbar.html");
+            //Footer Load
+            $("#footer").load("../../components/footer/footer.html");
+        })
+
+        function refreshCustomers() {
+            let html = "";
+            customers.forEach((x) => {
+                const date = new Date(x.date.date);
+                html += `
+                    <div>
+                        <h2>Customer</h2>
+                        <h5>${x.name}</h5>
+                        <h5>${x.surname}</h5>
+                        <h5>${x.enterprise}</h5>
+                        <h5>${x.address}</h5>
+                        <h5>${x.phone}</h5>
+                        <h5>${date.toLocaleString("es-ES", { year: "numeric", month: "long", day: "2-digit" })}</h5>
+                        <button id="delete${x.id}">Delete</button>
+                        <button id="modify${x.id}">Modify</button>
+                    </div>
+                `
+            })
+
+            $('#root').html(html);
+
+            //Add Deletes and Modify
+            customers.forEach((x) => {
+                $(`#delete${x.id}`).click(async () => {
+                    const formData=new FormData();
+                    formData.set("id",x.id);
+                    await AJAXFetchs.deleteCustomer(formData);
+                    location.reload();
+                })
+            });
+
+        }
+    </script>
+</body>
+
+</html>

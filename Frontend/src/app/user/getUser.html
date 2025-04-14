@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User</title>
+    <script src="../../components/jquery-3.7.1.js"></script>
+    <script src="../../components/fetchs/fetchs.js"></script>
+    <script src="../../components/cookies/cookies.js"></script>
+</head>
+<body>
+    <div id="navbar">
+
+    </div>
+    <div id="root">
+
+    </div>
+    <footer id="footer">
+
+    </footer>
+    <script>
+        $(document).ready(()=>{
+            //NavBar
+            $('#navbar').load("../../components/navbar/navbar.html");
+            //NavBar
+            $('#footer').load("../../components/footer/footer.html");
+
+            const id=Cookies.getCookie('id');
+            const email=Cookies.getCookie('email');
+            const name=Cookies.getCookie('name');
+            const surname=Cookies.getCookie('surname');
+
+            const rootElement=$("#root");
+
+            rootElement.html(`
+                <h1>Email: ${email}</h1>
+                <h1>Name: ${name}</h1>
+                <h1>Surname: ${surname}</h1>
+                <br>
+                <button id='delete'>Delete</button>
+                <button id='modify'>Modify</button>
+            `);
+
+            $("#delete").click(async ()=>{
+                console.log("deleting");
+
+                //await AJAXFetchs.deleteUser();
+                Cookies.removeLoginCookies();
+                location.href="/CRM_APP/Frontend/src/app/user/loginUser.html";
+            });
+
+            $("#modify").click(()=>{
+                console.log("Start to Modify");
+                rootElement.html(`
+                   <form id="formModify">
+                        <input type='text' name='email' value='${email}'>
+                        <input type='text' name='name' value='${name}'>
+                        <input type='text' name='surname' value='${surname}'>
+                        <input type='password' name='password' placeholder="New Password">
+                        <input type="submit" value="Save">
+                    </form>
+                    <button id='cancelButton'>Cancel</button>
+                `);
+
+                $("#formModify").submit(async (e)=>{
+                    e.preventDefault();
+                    const formData=new FormData(e.target);
+
+                    await AJAXFetchs.updateUser(formData);
+                    location.reload();
+                })
+                $("#cancelButton").click(()=>{
+                    location.reload();
+                })
+            });
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../components/jquery-3.7.1.js"></script>
+    <script src="../../components/fetchs/fetchs.js"></script>
+    <script src="../../components/cookies/cookies.js"></script>
+</head>
+
+<body>
+    <div id="navbar">
+
+    </div>
+    <form id="form">
+        <input type="text" placeholder="Email" name="email">
+        <input type="password" placeholder="Password" name="password">
+        <input type="submit" value="Log-In">
+    </form>
+    <footer id="footer">
+
+    </footer>
+    <script>
+        
+        $(document).ready(() => {
+            //NavBar
+            $('#navbar').load("../../components/navbar/navbar.html");
+            $('#footer').load("../../components/footer/footer.html");
+
+            const form = $("#form");
+
+            form.submit((e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+
+                AJAXFetchs.loginUser(formData);
+            })
+        })
+
+
+
+
+
+    </script>
+</body>
+
+</html>

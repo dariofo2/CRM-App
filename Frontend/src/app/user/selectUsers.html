@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../components/jquery-3.7.1.js"></script>
+    <script src="../../components/fetchs/fetchs.js"></script>
+    <script src="../../components/cookies/cookies.js"></script>
+</head>
+<body>
+    <div id="navbar">
+
+    </div>
+    <div id="root">
+
+    </div>
+    <footer id="footer">
+
+    </footer>
+    <script>
+        const usersElement=$("#root");
+        let users=[];
+        async function getUsers () {
+            users=await AJAXFetchs.selectUsers();
+            console.log(users);
+            refreshUsers();
+        }
+
+        $(document).ready(()=>{
+            getUsers();
+
+            //NavBar
+            $('#navbar').load("../../components/navbar/navbar.html");
+            $('#footer').load("../../components/footer/footer.html");
+        })
+        
+        function refreshUsers () {
+            let html="<div>";
+            users.forEach(x => {
+                html+= `
+                    <div>
+                        <h2>Usuario</h2>
+                        <h4>${x.name}</h4>
+                        <h4>${x.surname}</h4>
+                        <h4>${x.email}</h4>
+                    </div>
+                `
+            });
+            html+="</div>"
+            usersElement.html(`
+                ${html}
+            `);
+        }
+    </script>
+</body>
+</html>

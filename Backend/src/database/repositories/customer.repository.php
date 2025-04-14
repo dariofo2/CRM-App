@@ -38,7 +38,7 @@
             $customer=new Customer($data['id'],$data['name'],$data['surname'],$data['phone'],$data['enterprise'],$data['address'],new DateTime($data['date']),[]);
             array_push($customersResponse,$customer);
         }
-
+        
         return $customersResponse;
     }
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="nav">
+
+    </div>
+    <script>
+        const name=Cookies.getCookie("name");
+        const surname=Cookies.getCookie("surname");
+        const id=Cookies.getCookie("id");
+        if (id) {
+            $("#nav").html(`
+                <a href="../../app/user/createUser.html">Create User</a>
+                <a href="../../app/user/selectUsers.html">View Users</a>
+                <a href="../../app/customer/getCustomers.html">View Customers</a>
+                <a href="../../app/user/createUser.html">...</a>
+                <a href="../../app/user/getUser.html">${name} ${surname}</a>
+                <a href="../../app/user/logout.html">Logout</a>
+            `);
+        } else {
+            $("#nav").html(`
+                <a href="../../app/user/createUser.html">Create User</a>
+                <a href="../../app/user/loginUser.html">Login</a>
+            `);
+        }
+        
+    </script>
+</body>
+</html>

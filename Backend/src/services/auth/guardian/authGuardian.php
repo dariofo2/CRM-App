@@ -9,7 +9,7 @@
             $payload=decodeJWT($jwtToken,"hola");
         } catch (Exception $e) {
             http_response_code(401);
-            exit();
+            exit;
         }
         
         $_REQUEST['payload']=$payload;
@@ -17,7 +17,10 @@
 
     function getTokenAndCheck (string $token) :string {
         $tokenSplit=explode(" ",$token);
-        if (!$tokenSplit[0]=="Bearer") http_response_code(401);
+        if (!$tokenSplit[0]=="Bearer" || !isset($tokenSplit[1])) {
+            http_response_code(401);
+            exit;
+        }
         return ($tokenSplit[1]);
     }
 ?>
