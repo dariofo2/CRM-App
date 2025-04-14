@@ -7,9 +7,8 @@
         checkAuth();
         $customer=getCustomerRequest();
 
-        $customerResp=selectCustomer($customer);
+        $customersResp=selectCustomersByYear($customer);
 
-        if ($customerResp) echo json_encode($customerResp);
-        else throw new Exception("Customer not Found");
+        echo json_encode($customersResp);
     }
 ?>

@@ -6,7 +6,7 @@
         global $conn;
 
         $email=$user->email;
-        $password=$user->password;
+        $password=hash("sha256",$user->password);
         $name=$user->name;
         $surname=$user->surname;
 
@@ -20,7 +20,7 @@
         global $conn;
 
         $id=$user->id;
-
+        
         $preparedStatement=$conn->prepare("delete from user where id=?");
         //$preparedStatement->bindParam("i",$id);
 
@@ -35,7 +35,7 @@
         global $conn;
 
         $email=$user->email;
-        $password=$user->password;
+        $password=hash("sha256",$user->password);
 
         $preparedStatement=$conn->prepare("select * from user where email=? AND password=?");
         //$preparedStatement->bindParam("ss",$email,$password);
@@ -46,7 +46,7 @@
         $users=[];
 
         foreach(new RecursiveArrayIterator($preparedStatement->fetchAll()) as $k=>$v) {
-          $newUser=new User($v['id'],$v['email'],$v['password'],$v['name'],$v['surname']);
+          $newUser=new User($v['id'],$v['email'],null,$v['name'],$v['surname']);
           array_push($users,$newUser);
         }
         //echo $users;
@@ -64,7 +64,7 @@
         $result=$conn->query("select * from user");
         $usersResponse=[];
         foreach ($result as $data) {
-            $user=new User($data['id'],$data['email'],$data['password'],$data['name'],$data['surname']);
+            $user=new User($data['id'],$data['email'],null,$data['name'],$data['surname']);
             array_push($usersResponse,$user);
         }
 
@@ -77,7 +77,7 @@
 
         $id=$user->id;
         $email=$user->email;
-        $password=$user->password;
+        $password=hash("sha256",$user->password);
         $name=$user->name;
         $surname=$user->surname;
 

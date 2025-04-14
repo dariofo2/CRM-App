@@ -14,9 +14,10 @@
         if (isset($_POST['phone'])) $phone=$_POST['phone'];
         if (isset($_POST['enterprise'])) $enterprise=$_POST['enterprise'];
         if (isset($_POST['address'])) $address=$_POST['address'];
+        if (isset($_POST['date'])) $date=new DateTime($_POST['date']);
 
         echo $id;
-        $customerReq=new Customer($id,$name,$surname,$phone,$enterprise,$address,[]);
+        $customerReq=new Customer($id,$name,$surname,$phone,$enterprise,$address,$date,[]);
 
         return $customerReq;
     }

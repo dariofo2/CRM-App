@@ -10,6 +10,7 @@ class Customer
     public ?string $phone;
     public ?string $enterprise;
     public ?string $address;
+    public ?DateTime $date;
 
     //OneToMany RelationShip
     /**
@@ -17,7 +18,7 @@ class Customer
      */
     public array $business_chances;
 
-    function __construct(?int $id, ?string $name, ?string $surname, ?string $phone, ?string $enterprise, ?string $address, ?array $bussiness_chances)
+    function __construct(?int $id, ?string $name, ?string $surname, ?string $phone, ?string $enterprise, ?string $address,?DateTime $date, ?array $bussiness_chances)
     {
         $this->id = $id;
         $this->name = $name;
@@ -25,6 +26,7 @@ class Customer
         $this->phone = $phone;
         $this->enterprise = $enterprise;
         $this->address = $address;
+        $this->date=$date;
         $this->business_chances = $bussiness_chances;
     }
 }

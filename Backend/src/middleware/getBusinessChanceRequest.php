@@ -12,9 +12,10 @@
         if (isset($_POST['name'])) $name=$_POST['name'];
         if (isset($_POST['status'])) $status=$_POST['status'];
         if (isset($_POST['date'])) $date=$_POST['date'];
-
+        if (isset($_POST['customer'])) $customer=json_decode($_POST['customer']); else $customer=null;
+        
         $date=new DateTime($date);
-        $businessChanceReq=new Business_chance($id,$customerId,$name,$status,$date,null);
+        $businessChanceReq=new Business_chance($id,$customerId,$name,$status,$date,$customer);
 
         return $businessChanceReq;
     }

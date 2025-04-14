@@ -7,15 +7,15 @@ class Business_chance {
     public ?string $name;
     public ?string $status;
     public ?DateTime $date;
-    public ?Business_chance $business_chance;
+    public Customer|stdClass|null $customer;
 
-    function __construct(?int $id,?int $customerId,?string $name,?string $status,?DateTime $date,?Business_chance $business_chance) {
+    function __construct(?int $id,?int $customerId,?string $name,?string $status,?DateTime $date,Customer|stdClass|null $customer) {
         $this->id=$id;
         $this->customerId=$customerId;
         $this->name=$name;
         $this->status=$status;
         $this->date=$date;
-        $this->business_chance=$business_chance;
+        $this->customer=$customer;
     }
 }
 
