@@ -1,34 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script src="../../components/jquery-3.7.1.js"></script>
+    <script src="../../components/fetchs/fetchs.js"></script>
+    <script src="../../components/cookies/cookies.js"></script>
 </head>
-<body>
-    <div id="navbar">
 
-    </div>
+<body>
+    <div id="navbar"></div>
+
     <h1>Customer</h1>
-    <div>
+    <div id="customer">
 
     </div>
     <div>
         <h3>Business Chances</h3>
+        <h3>Insert</h3>
+        <form id="insertBusinessChance">
+            <input type="text" name="name" placeholder="Name">
+            <select name="status" id="status">
+                <option value="ganada">Ganada</option>
+                <option value="en conversación">En Conversación</option>
+                <option value="pausada">Pausada</option>
+                <option value="presupuestada">Presupuestada</option>
+                <option value="perdida">Perdida</option>
+            </select>
+            <input type="date" name="date">
+            <input type="submit" value="Insert">
+        </form>
         <h4>Filter By Year</h4>
         <input id="year" type="number" value="2025">
         <button id="filter">Filter</button>
+        <div id="businessChances">
+
+        </div>
     </div>
 
     <footer id="footer"></footer>
 
     <script>
-        $(document).ready(()=>{
+        const params = new URLSearchParams(document.location.search);
+        const customerId = params.get("id");
+
+        let customer = {};
+        let businessChances = [];
+        let editingId = 0;
+
+        async function getCustomer() {
+
+            const formData = new FormData();
+            formData.set("id", customerId);
+
+            customer = await AJAXFetchs.selectCustomer(formData);
+            refreshCustomer();
+        }
+
+        async function updateCustomer(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            formData.set("id", customerId);
+
+            await AJAXFetchs.updateCustomer(formData);
+            location.reload();
+        }
+        async function getBusinessChancesByCustomer() {
+            const formData = new FormData();
+            formData.set("customerId", customerId);
+
+            businessChances = await AJAXFetchs.selectBusinessChancesByCustomer(formData);
+            console.log(businessChances)
+            refreshBusinessChances();
+        }
+
+        async function getBusinessChancesByYear() {
+            const year = $("#year").val();
+
+            const date = new Date(`${year}-5-5`);
+            const formData = new FormData();
+
+            formData.set("customerId", customerId);
+            formData.set("date", date.toISOString());
+            businessChances = await AJAXFetchs.selectBusinessChancesByCustomerYear(formData);
+
+            refreshBusinessChances();
+        }
+
+        async function insertBusinessChance(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target)
+            formData.set("customerId", customerId)
+            await AJAXFetchs.insertBusinessChance(formData);
+            location.reload();
+        }
+
+        async function deleteBusinessChance(e) {
+            const formData = new FormData();
+            formData.set("id", e.target.dataset.id);
+            await AJAXFetchs.deleteBusinessChance(formData);
+            location.reload();
+        }
+
+        function refreshCustomer() {
+            const date = new Date(customer.date.date);
+            $("#customer").html(`
+                <div>
+                    <h3>${customer.name}</h3>
+                    <h3>${customer.surname}</h3>
+                    <h3>${customer.enterprise}</h3>
+                    <h3>${customer.address}</h3>
+                    <h3>${customer.phone}</h3>
+                    <h3>${date.toLocaleString("es-ES", { year: "numeric", month: "long", day: "2-digit" })}
+                    <button id="modifyCustomer">Modify</button>
+                </div>
+            `)
+
+            $("#modifyCustomer").click(() => {
+                refreshCustomerModify();
+            })
+        }
+
+        function refreshCustomerModify() {
+            const date = new Date(customer.date.date);
+            $("#customer").html(`
+                <div>
+                    <form id="modifyForm">
+                    <input type="text" name="name" value="${customer.name}" required></h3>
+                    <input type="text" name="surname" value="${customer.surname}" required></h3>
+                    <input type="text" name="enterprise" value="${customer.enterprise} required"></h3>
+                    <input type="text" name="address" value="${customer.address}" required></h3>
+                    <input type="text" name="phone" value="${customer.phone}" required></h3>
+                    <input type="date" name="date" value="${date.toISOString().split("T")[0]}" required>
+                    <input type="submit">Modify</button>
+                    </form>
+                    <button id="cancel">Cancel</button>
+                </div>
+            `)
+
+            $("#modifyForm").submit(() => {
+                updateCustomer(event);
+            })
+
+            $("#cancel").click(() => {
+                refreshCustomer();
+            })
+        }
+
+        function refreshBusinessChances() {
+            let html = "";
+
+            businessChances.forEach((x) => {
+                x.date = new Date(x.date.date);
+                html += `
+                    <div id="businessChance${x.id}">
+                        <h3>${x.name}</h3>
+                        <h3>${x.status}</h3>
+                        <h3>${x.date.toLocaleString("es-ES", { year: "numeric", month: "long", day: "2-digit" })}</h3>
+                        <button onclick="deleteBusinessChance(event)" data-id=${x.id}>Delete</button>
+                        <button class="modifyBusinessChance" data-businesschance='${JSON.stringify(x)}'>Modify</button>
+                    </div>
+                `
+            })
+
+            $("#businessChances").html(html);
+
+            $(".modifyBusinessChance").click((event) => {
+                const x = JSON.parse(event.target.dataset.businesschance);
+                x.date=new Date(x.date);
+                const id = x.id;
+                console.log(id);
+                editingId = id;
+
+                $(`#businessChance${id}`).html(`
+                    
+                        <form id="modifyFinalBusinessChance${x.id}">
+                            <input type="text" name="name" value=${x.name} placeholder="Name">
+                            <select id="status${x.id}" name="status" id="status">
+                                <option value="ganada">Ganada</option>
+                                <option value="en conversación">En Conversación</option>
+                                <option value="pausada">Pausada</option>
+                                <option value="presupuestada">Presupuestada</option>
+                                <option value="perdida">Perdida</option>
+                            </select>
+                            <input type="date" value=${x.date.toISOString().split("T")[0]} name="date">
+                            <input type="submit" value="Save">
+                        </form>
+                `)
+
+                $(`#status${x.id}`).val(x.status);
+
+                //$(`#businessChance${id}>h3`).attr("contentEditable","true").css("border","1px solid blue");
+                //$(`#businessChance${id}`).after("<button onclick='modifyBusinessChance()'>Save<button>",);
+                $(`#modifyFinalBusinessChance${x.id}`).submit((event)=>{
+                    event.preventDefault();
+                    modifyBusinessChance(event,x);
+                })
+            })
+        }
+
+        async function modifyBusinessChance(e,businessChance) {
+            const formData=new FormData(e.target);
+            formData.set("id",businessChance.id);
+            formData.set("customerId",customerId);
+            console.log(formData.get("name"));
+            await AJAXFetchs.updateBusinessChance(formData);
+            location.reload();
+        }
+
+        $(document).ready(() => {
             //NavBar
             $('#navbar').load("../../components/navbar/navbar.html");
             //NavBar
             $('#footer').load("../../components/footer/footer.html");
+
+            getCustomer();
+            getBusinessChancesByCustomer();
+
+            $("#insertBusinessChance").submit(() => {
+                insertBusinessChance(event);
+            });
+
+            $('#filter').click(() => {
+                getBusinessChancesByYear();
+            })
+
         })
     </script>
 </body>
+
 </html>

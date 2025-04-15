@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
     <script src="../../components/jquery-3.7.1.js"></script>
     <script src="../../components/fetchs/fetchs.js"></script>
     <script src="../../components/cookies/cookies.js"></script>
 </head>
 <body>
-    <div id="navbar">
+    <div class="" id="navbar">
 
     </div>
     <div id="root">
@@ -36,18 +38,35 @@
         })
         
         function refreshUsers () {
-            let html="<div>";
+            let html=`
+                <h1 class="display-2 text-center text-bg-dark">Users</h1>
+                <div class="container">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>#</th>
+                            <th>E-Mail</th>
+                            <th>Password</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                        </tr>
+            `;
+            
+            
             users.forEach(x => {
                 html+= `
-                    <div>
-                        <h2>Usuario</h2>
-                        <h4>${x.name}</h4>
-                        <h4>${x.surname}</h4>
-                        <h4>${x.email}</h4>
-                    </div>
+                    <tr>
+                        <th>${x.id}</th>
+                        <td>${x.name}</td>
+                        <td>************</td>
+                        <td>${x.surname}</td>
+                        <td>${x.email}</td>
+                    </tr>
                 `
             });
+                    
+            html+="</table>"
             html+="</div>"
+
             usersElement.html(`
                 ${html}
             `);

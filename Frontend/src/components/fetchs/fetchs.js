@@ -181,7 +181,9 @@ class AJAXFetchs {
                     "Authorization":`Bearer ${Cookies.getCookie("jwtToken")}`
                 }
             })
+            
             const data=JSON.parse(response);
+            
             return data;
 
         } catch (error) {
@@ -272,4 +274,198 @@ class AJAXFetchs {
             console.log(error.status);
         }
     }
+
+
+    //          B U S I N E S S  C H A N C E S
+    static async insertBusinessChance (businessChance) {
+        try {
+            const response=await $.ajax({
+                async:true,
+                method:"POST",
+                type:"POST",
+                processData:false,
+                contentType:false,
+                data: businessChance,
+                url:`${this.url}/Backend/src/controllers/business_chance/insertBusinessChance.php`,
+                headers:{
+                    "Authorization":`Bearer ${Cookies.getCookie("jwtToken")}`
+                }
+            })
+            
+            //const data=JSON.parse(response);
+            
+            //return data;
+
+        } catch (error) {
+            console.log(error.status);
+        }
+    }
+
+    static async deleteBusinessChance (businessChance) {
+        try {
+            const response=await $.ajax({
+                async:true,
+                method:"POST",
+                type:"POST",
+                processData:false,
+                contentType:false,
+                data: businessChance,
+                url:`${this.url}/Backend/src/controllers/business_chance/deleteBusinessChance.php`,
+                headers:{
+                    "Authorization":`Bearer ${Cookies.getCookie("jwtToken")}`
+                }
+            })
+            
+            //const data=JSON.parse(response);
+            
+            //return data;
+
+        } catch (error) {
+            console.log(error.status);
+        }
+    }
+    static async selectBusinessChances () {
+        try {
+            const response=await $.ajax({
+                async:true,
+                method:"POST",
+                type:"POST",
+                processData:false,
+                contentType:false,
+                url:`${this.url}/Backend/src/controllers/business_chance/selectBusinessChances.php`,
+                headers:{
+                    "Authorization":`Bearer ${Cookies.getCookie("jwtToken")}`
+                }
+            })
+            
+            const data=JSON.parse(response);
+            
+            return data;
+
+        } catch (error) {
+            console.log(error.status);
+        }
+    }
+
+    static async selectBusinessChance (businessChance) {
+        try {
+            const response=await $.ajax({
+                async:true,
+                method:"POST",
+                type:"POST",
+                processData:false,
+                contentType:false,
+                data: businessChance,
+                url:`${this.url}/Backend/src/controllers/business_chance/selectBusinessChance.php`,
+                headers:{
+                    "Authorization":`Bearer ${Cookies.getCookie("jwtToken")}`
+                }
+            })
+            
+            const data=JSON.parse(response);
+            
+            return data;
+
+        } catch (error) {
+            console.log(error.status);
+        }
+    }
+
+    static async selectBusinessChancesByCustomer (businessChance) {
+        
+        try {
+            const response=await $.ajax({
+                async:true,
+                method:"POST",
+                type:"POST",
+                processData:false,
+                contentType:false,
+                data: businessChance,
+                url:`${this.url}/Backend/src/controllers/business_chance/selectBusinessChancesByCustomer.php`,
+                headers:{
+                    "Authorization":`Bearer ${Cookies.getCookie("jwtToken")}`
+                }
+            })
+            
+            const data=JSON.parse(response);
+            
+            return data;
+
+        } catch (error) {
+            console.log(error.status);
+        }
+    }
+
+    static async selectBusinessChancesByCustomerYear (businessChance) {
+        try {
+            const response=await $.ajax({
+                async:true,
+                method:"POST",
+                type:"POST",
+                processData:false,
+                contentType:false,
+                data: businessChance,
+                url:`${this.url}/Backend/src/controllers/business_chance/selectBusinessChancesByCustomerYear.php`,
+                headers:{
+                    "Authorization":`Bearer ${Cookies.getCookie("jwtToken")}`
+                }
+            })
+            
+            const data=JSON.parse(response);
+            
+            return data;
+
+        } catch (error) {
+            console.log(error.status);
+        }
+    }
+
+    static async selectBusinessChanceCountByStatus (businessChance) {
+        try {
+            const response=await $.ajax({
+                async:true,
+                method:"POST",
+                type:"POST",
+                processData:false,
+                contentType:false,
+                data: businessChance,
+                url:`${this.url}/Backend/src/controllers/business_chance/selectBusinessChanceCountByStatus.php`,
+                headers:{
+                    "Authorization":`Bearer ${Cookies.getCookie("jwtToken")}`
+                }
+            })
+            
+            const data=JSON.parse(response);
+            
+            return data;
+
+        } catch (error) {
+            console.log(error.status);
+        }
+    }
+
+    static async updateBusinessChance (businessChance) {
+        try {
+            const response=await $.ajax({
+                async:true,
+                method:"POST",
+                type:"POST",
+                processData:false,
+                contentType:false,
+                data: businessChance,
+                url:`${this.url}/Backend/src/controllers/business_chance/updateBusinessChance.php`,
+                headers:{
+                    "Authorization":`Bearer ${Cookies.getCookie("jwtToken")}`
+                }
+            })
+            
+            //const data=JSON.parse(response);
+            
+            //return data;
+
+        } catch (error) {
+            console.log(error.status);
+        }
+    }
+    
 }

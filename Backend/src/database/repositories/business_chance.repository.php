@@ -63,7 +63,66 @@
         else return null;
     }
 
+    /**
+     * @return Businness_chance[]
+     */
+    function selectBusinessChancesByCustomerId (Business_chance $business_chance) : array {
+        global $conn;
 
+        $id=$business_chance->customerId;
+
+        $preparedStatement=$conn->prepare("select * from business_chance where customerId=?");
+        //$preparedStatement->bindParam("ss",$email,$password);
+
+        $preparedStatement->execute([$id]);
+
+        $result = $preparedStatement->setFetchMode(PDO::FETCH_ASSOC);
+        $businessChancesResp=[];
+
+        foreach(new RecursiveArrayIterator($preparedStatement->fetchAll()) as $k=>$data) {
+            $businessChanceNew=new Business_chance($data['id'],$data['customerId'],$data['name'],$data['status'],new DateTime($data['date']),null);
+            array_push($businessChancesResp,$businessChanceNew);
+        }
+        //echo $users;
+        //Check if finded One at Least
+        return $businessChancesResp;
+    }
+
+    function selectBusinessChancesByCustomerIdAndYear (Business_chance $business_chance) : array {
+        global $conn;
+
+        $id=$business_chance->customerId;
+        $date=$business_chance->date->format("y-m-d");
+
+        $preparedStatement=$conn->prepare("select * from business_chance where customerId=? AND year(date)=year(?)");
+        //$preparedStatement->bindParam("ss",$email,$password);
+
+        $preparedStatement->execute([$id,$date]);
+
+        $result = $preparedStatement->setFetchMode(PDO::FETCH_ASSOC);
+        $businessChancesResp=[];
+
+        foreach(new RecursiveArrayIterator($preparedStatement->fetchAll()) as $k=>$data) {
+            $businessChanceNew=new Business_chance($data['id'],$data['customerId'],$data['name'],$data['status'],new DateTime($data['date']),null);
+            array_push($businessChancesResp,$businessChanceNew);
+        }
+        //echo $users;
+        //Check if finded One at Least
+        return $businessChancesResp;
+    }
+
+    function selectBusinessChancesCountByStatus () {
+        global $conn;
+
+        $result=$conn->query("SELECT status,count(*) as count FROM `business_chance` WHERE 1 GROUP BY status");
+        $businessChancesResponse=[];
+        foreach ($result as $data) {
+            $businessChanceNew=new businessChanceCountStatus($data['status'],$data['count']);
+            array_push($businessChancesResponse,$businessChanceNew);
+        }
+
+        return $businessChancesResponse;
+    }
     function updateBusinessChance (Business_chance $businessChance) : void {
         global $conn;
 
