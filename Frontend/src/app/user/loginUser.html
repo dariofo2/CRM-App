@@ -39,6 +39,7 @@
         </div>
         
         <input type="submit" class="btn btn-success mt-3 w-100" value="Log-In">
+        <h6 id="warning"></h6>
     </form>
     <footer id="footer">
 
@@ -52,11 +53,13 @@
 
             const form = $("#form");
 
-            form.submit((e) => {
+            form.submit(async (e) => {
                 e.preventDefault();
                 const formData = new FormData(e.target);
 
-                AJAXFetchs.loginUser(formData);
+                const result=await AJAXFetchs.loginUser(formData);
+                
+                if (result) $("#warning").html("<span class='text-danger'>Email or Password Invalid, Try Again</span>")
             })
         })
 
