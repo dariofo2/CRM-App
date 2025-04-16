@@ -160,8 +160,8 @@
                             <td>${x.phone}</td>
                             <td>${date.toLocaleString("es-ES", { year: "numeric", month: "long", day: "2-digit" })}</h5>
                             <td>
-                                <button id="delete${x.id}">Delete</button>
-                                <button id="modify${x.id}">Modify</button>
+                                <button id="delete${x.id}" class="btn btn-sm btn-outline-danger">Delete</button>
+                                <button id="modify${x.id}" class="btn btn-sm btn-outline-primary">Modify</button>
                             </td>
                             
                         </tr>
@@ -180,20 +180,23 @@
                     const formData = new FormData();
                     formData.set("id", x.id);
                     await AJAXFetchs.deleteCustomer(formData);
-                    location.reload();
+                    fetchCustomers();
                 })
             });
 
         }
 
         $(document).ready(() => {
+            Cookies.checkCookieOrSendToHome();
+            
             fetchCustomers();
 
             $("#formCreate").submit(async (e) => {
                 e.preventDefault();
                 const formData = new FormData(e.target);
                 await AJAXFetchs.insertCustomer(formData);
-                location.reload();
+                fetchCustomers();
+                e.target.reset();
             })
 
             $('#filter').click(() => {
