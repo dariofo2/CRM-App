@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customers</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
     <script src="../../components/jquery-3.7.1.js"></script>
     <script src="../../components/fetchs/fetchs.js"></script>
     <script src="../../components/cookies/cookies.js"></script>
@@ -16,25 +19,90 @@
     <div id="navbar">
 
     </div>
-    <div id="create">
-        <h1 class="text-center">Insert Customer</h1>
-        <form id="formCreate">
-            <input type="text" name="name" placeholder="name">
-            <input type="text" name="surname" placeholder="surname">
-            <input type="text" name="enterprise" placeholder="enterprise">
-            <input type="text" name="address" placeholder="address">
-            <input type="text" name="phone" placeholder="phone">
-            <input type="date" name="date" placeholder="date">
-            <input type="submit" value="create">
-        </form>
-    </div>
-    <div>
-        <h2 class="text-center">Filter by Year</h2>
-        <input id="year" type="number" value="2025" name="year">
-        <button id="filter" >Filter</button>
-    </div>
+
     <h1 class="display-2 text-center">Customers</h1>
-    <div id="root"></div>
+
+    <div class="accordion container mb-3" id="accordionExample">
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Insert Customer</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formCreate" class="m-auto" style="max-width:900px">
+                            <div class="">
+                                <div class="">
+                                    <div class="form-floating">
+                                        <input class="form-control" type="text" name="name" placeholder="Name" required>
+                                        <label class="form-label">Name</label>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="form-floating">
+                                        <input class="form-control" type="text" name="surname" placeholder="Surname"
+                                            required>
+                                        <label class="form-label">Surname</label>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="form-floating">
+                                        <input class="form-control" type="text" name="enterprise"
+                                            placeholder="Enterprise" required>
+                                        <label class="form-label">Enterprise</label>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="form-floating">
+                                        <input class="form-control" type="text" name="address" placeholder="Address"
+                                            required>
+                                        <label class="form-label">Address</label>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="form-floating">
+                                        <input class="form-control" type="text" name="phone" placeholder="Phone"
+                                            required>
+                                        <label class="form-label">Phone</label>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="form-floating">
+                                        <input class="form-control" type="date" name="date" placeholder="Date" required>
+                                        <label class="form-label">Date</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <input class="btn btn-success w-100 mt-3" type="submit" value="Create">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="container">
+        <div class="row justify-content-end">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary col-auto me-auto" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                Insert Customer
+            </button>
+            <h4 class="col-auto">Filter by Year</h4>
+            <input class="col-auto" id="year" type="number" value="2025" name="year">
+            <div class="col-auto">
+                <button id="filter" class="btn btn-outline-dark">Filter</button>
+            </div>
+        </div>
+    </div>
+    <div id="root" class="container"></div>
 
     <footer id="footer"></footer>
 
@@ -49,19 +117,19 @@
         }
 
         async function fetchCustomersByYear() {
-            const year=$('#year').val();
-            
-            const date=new Date(`${year}-5-5`);
-            const formData=new FormData();
+            const year = $('#year').val();
 
-            formData.set("date",date.toISOString());
-            customers=await AJAXFetchs.selectCustomersByYear(formData);
-            
+            const date = new Date(`${year}-5-5`);
+            const formData = new FormData();
+
+            formData.set("date", date.toISOString());
+            customers = await AJAXFetchs.selectCustomersByYear(formData);
+
             refreshCustomers();
         }
 
         function getCustomerPage(id) {
-            location.href=`getCustomer.html?id=${id}`
+            location.href = `getCustomer.html?id=${id}`
         }
 
         function refreshCustomers() {
@@ -101,7 +169,7 @@
                 `
             });
 
-            html+="</table>";
+            html += "</table>";
 
             $('#root').html(html);
 
@@ -109,8 +177,8 @@
             customers.forEach((x) => {
                 $(`#delete${x.id}`).click(async (event) => {
                     event.stopPropagation();
-                    const formData=new FormData();
-                    formData.set("id",x.id);
+                    const formData = new FormData();
+                    formData.set("id", x.id);
                     await AJAXFetchs.deleteCustomer(formData);
                     location.reload();
                 })
@@ -128,7 +196,7 @@
                 location.reload();
             })
 
-            $('#filter').click(()=>{
+            $('#filter').click(() => {
                 fetchCustomersByYear();
             })
 
@@ -138,7 +206,7 @@
             $("#footer").load("../../components/footer/footer.html");
         })
 
-        
+
     </script>
 </body>
 

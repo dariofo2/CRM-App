@@ -1,4 +1,8 @@
 <?php
+    /**
+     * Insert Customer To Database
+     * @param Customer $customer The Customer to Insert with ALL DATA
+     */
     function insertCustomer (Customer $customer) {
         global $conn;
 
@@ -15,6 +19,10 @@
 
     }
 
+    /**
+     * Delete Customer From Database
+     * @param Customer $customer The Customer Req with Id To delete
+     */
     function deleteCustomer (Customer $customer) {
         global $conn;
 
@@ -27,6 +35,7 @@
     }
 
     /**
+     * Select Customers from Database
      * @return Customer[]
      */
     function selectCustomers() : array {
@@ -42,6 +51,11 @@
         return $customersResponse;
     }
 
+    /**
+     * Select a Customer from Database
+     * @param Customer $customer The Customer Req Object with ID
+     * @return ?Customer
+     */
     function selectCustomer(Customer $customer) : ?Customer {
         global $conn;
 
@@ -66,6 +80,8 @@
     }
 
     /**
+     * Select Customers By Year from Database
+     * @param Customer $customer The customer Req Object with Year
      * @return Customer[]
      */
     function selectCustomersByYear(Customer $customer) : array {
@@ -90,6 +106,10 @@
     }
 
 
+    /**
+     * Update Customer from Database
+     * @param Customer $customer The Customer Req Object with All DATA
+     */
     function updateCustomer (Customer $customer) : void {
         global $conn;
 

@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
     <script src="../../components/jquery-3.7.1.js"></script>
     <script src="../../components/fetchs/fetchs.js"></script>
     <script src="../../components/cookies/cookies.js"></script>
@@ -15,28 +18,65 @@
 <body>
     <div id="navbar"></div>
 
-    <h1>Customer</h1>
+    <h1 class="text-center text-bg-dark display-1">Customer</h1>
     <div id="customer">
 
     </div>
-    <div>
-        <h3>Business Chances</h3>
-        <h3>Insert</h3>
-        <form id="insertBusinessChance">
-            <input type="text" name="name" placeholder="Name">
-            <select name="status" id="status">
-                <option value="ganada">Ganada</option>
-                <option value="en conversación">En Conversación</option>
-                <option value="pausada">Pausada</option>
-                <option value="presupuestada">Presupuestada</option>
-                <option value="perdida">Perdida</option>
-            </select>
-            <input type="date" name="date">
-            <input type="submit" value="Insert">
-        </form>
-        <h4>Filter By Year</h4>
-        <input id="year" type="number" value="2025">
-        <button id="filter">Filter</button>
+    <hr>
+    <div class="container text-center mt-5">
+        <h3 class="display-4">Business Chances</h3>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Insert Business Chance</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="insertBusinessChance" class="m-auto" style="max-width: 400px;" required>
+                            <div class="form-floating">
+                                <input class="form-control" type="text" name="name" placeholder="Name" required>
+                                <label class="form-label">Name</label>
+                            </div>
+                            <select class="form-select mt-3" name="status" id="status">
+                                <option value="ganada">Ganada</option>
+                                <option value="en conversación">En Conversación</option>
+                                <option value="pausada">Pausada</option>
+                                <option value="presupuestada">Presupuestada</option>
+                                <option value="perdida">Perdida</option>
+                            </select>
+                            <div class="form-floating mt-3">
+                                <input class="form-control" type="date" name="date" placeholder="Date" required>
+                                <label class="form-label">Date</label>
+                            </div>
+
+                            <input class="btn btn-success mt-3 w-100" type="submit" value="Insert">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-end">
+            <!-- Button trigger modal -->
+            <div class="col-auto me-auto">
+                <button type="button" class="btn btn-outline-primary col-auto"
+                    data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Insert New Business Chance
+                </button>
+            </div>
+            <h4 class="col-auto">Filter By Year</h4>
+            <div class="col-auto">
+                <input class="form-control" id="year" type="number" value="2025">
+            </div>
+            <button class="col-auto" id="filter">Filter</button>
+        </div>
         <div id="businessChances">
 
         </div>
@@ -50,7 +90,6 @@
 
         let customer = {};
         let businessChances = [];
-        let editingId = 0;
 
         async function getCustomer() {
 
@@ -109,14 +148,17 @@
         function refreshCustomer() {
             const date = new Date(customer.date.date);
             $("#customer").html(`
-                <div>
-                    <h3>${customer.name}</h3>
-                    <h3>${customer.surname}</h3>
-                    <h3>${customer.enterprise}</h3>
-                    <h3>${customer.address}</h3>
-                    <h3>${customer.phone}</h3>
-                    <h3>${date.toLocaleString("es-ES", { year: "numeric", month: "long", day: "2-digit" })}
-                    <button id="modifyCustomer">Modify</button>
+                <div class="text-center container">
+                    <h3 class="display-3">${customer.name} ${customer.surname}</h3>
+                    <h3 class="text-danger">Enterprise</h3>
+                    <h4>${customer.enterprise}</h4>
+                    <h3 class="text-danger">Address</h3>
+                    <h4>${customer.address}</h4>
+                    <h3 class="text-danger">Phone</h3>
+                    <h4>${customer.phone}</h4>
+                    <h3 class="text-danger">Date</h3>
+                    <h4>${date.toLocaleString("es-ES", { year: "numeric", month: "long", day: "2-digit" })}</h4>
+                    <button class="btn btn-primary" id="modifyCustomer">Modify</button>
                 </div>
             `)
 
@@ -126,19 +168,39 @@
         }
 
         function refreshCustomerModify() {
+            console.log(customer.enterprise);
             const date = new Date(customer.date.date);
             $("#customer").html(`
-                <div>
-                    <form id="modifyForm">
-                    <input type="text" name="name" value="${customer.name}" required></h3>
-                    <input type="text" name="surname" value="${customer.surname}" required></h3>
-                    <input type="text" name="enterprise" value="${customer.enterprise} required"></h3>
-                    <input type="text" name="address" value="${customer.address}" required></h3>
-                    <input type="text" name="phone" value="${customer.phone}" required></h3>
-                    <input type="date" name="date" value="${date.toISOString().split("T")[0]}" required>
-                    <input type="submit">Modify</button>
+                <div class="container text-center">
+                    <form id="modifyForm" class="m-auto" style="max-width:400px;">
+                        <div class="form-floating">
+                            <input class="form-control" type="text" name="name" value="${customer.name}" placeholder="Name" required>
+                            <label class="form-label">Name</label>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" type="text" name="surname" value="${customer.surname}" placeholder="Surname" required>
+                            <label class="form-label">Surname</label>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" type="text" name="enterprise" value="${customer.enterprise}" placeholder="Enterprise" required">
+                            <label class="form-label">Enterprise</label>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" type="text" name="address" value="${customer.address}" placeholder="Address" required>
+                            <label class="form-label">Address</label>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" type="text" name="phone" value="${customer.phone}" placeholder="Phone" required>
+                            <label class="form-label">Phone</label>
+                        </div>
+                        <div class="form-floating">
+                            <input class="form-control" type="date" name="date" value="${date.toISOString().split("T")[0]}" required>
+                            <label class="form-label">Date</label>
+                        </div>
+
+                    <button class="btn btn-success" type="submit">Modify</button>
                     </form>
-                    <button id="cancel">Cancel</button>
+                    <button class="btn btn-danger" id="cancel">Cancel</button>
                 </div>
             `)
 
@@ -152,34 +214,50 @@
         }
 
         function refreshBusinessChances() {
-            let html = "";
+            let html = `
+                <table class="table table-hover">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+            `;
 
             businessChances.forEach((x) => {
                 x.date = new Date(x.date.date);
                 html += `
-                    <div id="businessChance${x.id}">
-                        <h3>${x.name}</h3>
-                        <h3>${x.status}</h3>
-                        <h3>${x.date.toLocaleString("es-ES", { year: "numeric", month: "long", day: "2-digit" })}</h3>
+                    <tr id="businessChance${x.id}">
+                        <th>${x.id}</th>
+                        <td>${x.name}</td>
+                        <td>${x.status}</td>
+                        <td>${x.date.toLocaleString("es-ES", { year: "numeric", month: "long", day: "2-digit" })}</td>
+                        <td>
                         <button onclick="deleteBusinessChance(event)" data-id=${x.id}>Delete</button>
                         <button class="modifyBusinessChance" data-businesschance='${JSON.stringify(x)}'>Modify</button>
-                    </div>
+                        </td>
+                    </tr>
                 `
             })
+
+            html += `
+                </table>
+            `;
 
             $("#businessChances").html(html);
 
             $(".modifyBusinessChance").click((event) => {
                 const x = JSON.parse(event.target.dataset.businesschance);
-                x.date=new Date(x.date);
-                const id = x.id;
-                console.log(id);
-                editingId = id;
+                x.date = new Date(x.date);
 
-                $(`#businessChance${id}`).html(`
-                    
+                $(`#businessChance${x.id}`).html(`
                         <form id="modifyFinalBusinessChance${x.id}">
-                            <input type="text" name="name" value=${x.name} placeholder="Name">
+                            <th>${x.id}</th>
+                            <td>
+                            <input id="name${x.id}" type="text" name="name" value=${x.name} placeholder="Name">
+                            </td>
+                            <td>
                             <select id="status${x.id}" name="status" id="status">
                                 <option value="ganada">Ganada</option>
                                 <option value="en conversación">En Conversación</option>
@@ -187,27 +265,33 @@
                                 <option value="presupuestada">Presupuestada</option>
                                 <option value="perdida">Perdida</option>
                             </select>
-                            <input type="date" value=${x.date.toISOString().split("T")[0]} name="date">
-                            <input type="submit" value="Save">
+                            </td>
+                            <td>
+                            <input id="date${x.id}" type="date" value=${x.date.toISOString().split("T")[0]} name="date">
+                            </td>
+                            <td>
+                            <button id="saveBusiness${x.id}" type="submit" value="Save">Save</button>
+                            </td>
                         </form>
                 `)
 
+                $(`#name${x.id}`).val(x.name);
                 $(`#status${x.id}`).val(x.status);
 
-                //$(`#businessChance${id}>h3`).attr("contentEditable","true").css("border","1px solid blue");
-                //$(`#businessChance${id}`).after("<button onclick='modifyBusinessChance()'>Save<button>",);
-                $(`#modifyFinalBusinessChance${x.id}`).submit((event)=>{
-                    event.preventDefault();
-                    modifyBusinessChance(event,x);
-                })
+                $(`#saveBusiness${x.id}`).click((e) => {
+                    modifyBusinessChance(x);
+                });
             })
         }
 
-        async function modifyBusinessChance(e,businessChance) {
-            const formData=new FormData(e.target);
-            formData.set("id",businessChance.id);
-            formData.set("customerId",customerId);
-            console.log(formData.get("name"));
+        async function modifyBusinessChance(businessChance) {
+            const formData = new FormData();
+            formData.set("id", businessChance.id);
+            formData.set("customerId", customerId);
+            formData.set("name", $(`#name${businessChance.id}`).val());
+            formData.set("status", $(`#status${businessChance.id}`).val());
+            formData.set("date", $(`#date${businessChance.id}`).val());
+
             await AJAXFetchs.updateBusinessChance(formData);
             location.reload();
         }

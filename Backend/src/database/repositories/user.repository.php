@@ -2,6 +2,10 @@
     //include (dirname(__FILE__) . "/../models/user.entity.php");
     //include (dirname(__FILE__).  "/../connection/connectDB.php");
 
+    /**
+     * Insert User to Database
+     * @param User $user The user Req Object with ALL DATA
+     */
     function insertUser (User $user) {
         global $conn;
 
@@ -16,6 +20,10 @@
 
     }
 
+    /**
+     * Delete User from Database
+     * @param User $user The user Req Object with ID
+     */
     function deleteUser (User $user) {
         global $conn;
 
@@ -29,6 +37,7 @@
 
     /**
      * Used For Login
+     * @param User $user The user Req Object with Email and Password
      * @return ?User
      */
     function selectUserByEmailPassword(User $user) : ?User {
@@ -56,6 +65,7 @@
     }
 
     /**
+     * Select all Users From Database
      * @return User[]
      */
     function selectUsers() : array {
@@ -72,6 +82,11 @@
     }
 
 
+    /**
+     * Update User from Database
+     * @param User $user The user Req Object to Delete with ALL DATA
+     * @return void
+     */
     function updateUser (User $user) : void {
         global $conn;
 

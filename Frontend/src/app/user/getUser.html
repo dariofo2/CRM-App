@@ -86,6 +86,9 @@
                     const formData=new FormData(e.target);
 
                     await AJAXFetchs.updateUser(formData);
+                    Cookies.setCookie('name',formData.get("name"));
+                    Cookies.setCookie('surname',formData.get("surname"));
+                    Cookies.setCookie('email',formData.get("email"));
                     location.reload();
                 })
                 $("#cancelButton").click(()=>{

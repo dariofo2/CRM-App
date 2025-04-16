@@ -3,8 +3,9 @@
  * Encode JWT Token with Payload
  * @param string $secret The secret Key to Validate Token Signature Hash
  * @param array $payload The payload in Associative Array Format
+ * @return string The Token
  */
-    function encodeJWT (string $secret,array $payload) {
+    function encodeJWT (string $secret,array $payload) : string {
         $header= [
             "typ" => "JWT",
             "alg" => "HS256"
@@ -23,6 +24,12 @@
         return $jwt;
     }
 
+    /**
+     * Decode JWT and Returns Payload
+     * @param string $token The Token
+     * @param string $secret The Secret Key of JWT. Dont Transfer to Anyone and Secure it cause someone getting it could cause a High Security Breach
+     * @return array The Payload as Associative Array
+     */
     function decodeJWT (string $token,string $secret) :array {
         if (
             preg_match(
@@ -47,7 +54,9 @@
         return $payload;
     }
 
-    //Encode for URL (Not +,/ and = characters) with Base64
+    /**
+     * Encode for URL (Not +,/ and = characters) with Base64
+     */
     function base64URLEncode(string $text): string
     {
 

@@ -1,5 +1,10 @@
 <?php
     //include (dirname(__FILE__) . "/../database/models/user.entity.php");
+
+    /**
+     * Gets a CustomerRequest and transform it into a Customer Object To interact
+     * @return Customer The Customer Req Object Transformed
+     */
     function getCustomerRequest () : Customer {
         $id=null;
         $name=null;

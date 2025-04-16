@@ -1,7 +1,9 @@
 <?php
 //include "business_chance.php";
 
-
+/**
+ * Customer Entity of Database
+ */
 class Customer
 {
     public ?int $id;

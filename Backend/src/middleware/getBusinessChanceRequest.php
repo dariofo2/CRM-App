@@ -1,5 +1,9 @@
 <?php
     //include (dirname(__FILE__) . "/../database/models/user.entity.php");
+    /**
+     * Gets a BusinessChanceRequest and transform it into a BusinessChance Object To interact
+     * @return Business_chance The Req Object Transformed
+     */
     function getBusinessChanceRequest () : Business_chance {
         $id=null;
         $customerId=null;

@@ -1,4 +1,8 @@
 <?php
+    /**
+     * Insert Business Chance To Database
+     * @param Business_chance $businessChance The BusinessChance to Insert with ALL DATA
+     */
     function insertBusinessChance (Business_chance $businessChance) {
         global $conn;
 
@@ -13,6 +17,10 @@
 
     }
 
+    /**
+     * Delete Business Chance From Database
+     * @param Business_chance $businessChance The BusinessChance to Delete
+     */
     function deleteBusinessChance (Business_chance $businessChance) {
         global $conn;
 
@@ -25,6 +33,7 @@
     }
 
     /**
+     * Select businessChances from The Database
      * @return Business_chance[]
      */
     function selectBusinessChances() : array {
@@ -40,6 +49,11 @@
         return $businessChancesResponse;
     }
 
+    /**
+     * Select only one businessChance from The Database by ID
+     * @param Business_chance $business_chance The Business Chance Request with the ID
+     * @return Business_chance
+     */
     function selectBusinessChance (Business_chance $business_chance) : ?Business_chance {
         global $conn;
 
@@ -64,6 +78,8 @@
     }
 
     /**
+     * Select Business Chances from Database by CustomerId
+     * @param Business_chance $business_chance The BusinessChance request with CustomerId
      * @return Businness_chance[]
      */
     function selectBusinessChancesByCustomerId (Business_chance $business_chance) : array {
@@ -88,6 +104,11 @@
         return $businessChancesResp;
     }
 
+    /**
+     * Select Business Chances from Database by CustomerId and Year
+     * @param Business_chance $business_chance The BusinessChance Request with customerId and Year
+     * @return Businness_chance[]
+     */
     function selectBusinessChancesByCustomerIdAndYear (Business_chance $business_chance) : array {
         global $conn;
 
@@ -111,7 +132,11 @@
         return $businessChancesResp;
     }
 
-    function selectBusinessChancesCountByStatus () {
+    /**
+     * Select Business Chances Count by Status from Database
+     * @return Businness_chance[]
+     */
+    function selectBusinessChancesCountByStatus () : array {
         global $conn;
 
         $result=$conn->query("SELECT status,count(*) as count FROM `business_chance` WHERE 1 GROUP BY status");
@@ -123,6 +148,12 @@
 
         return $businessChancesResponse;
     }
+
+    /**
+     * Update Business Chance from Database by ID
+     * @param Business_chance $businessChance The Business Chance Request Object with all DATA
+     * @return void
+     */
     function updateBusinessChance (Business_chance $businessChance) : void {
         global $conn;
 

@@ -1,4 +1,8 @@
 <?php
+
+    /**
+     * Data Transfer Object with Status and Count of Business Chance
+     */
     class businessChanceCountStatus {
         public ?string $status;
         public ?int $count;

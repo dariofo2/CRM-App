@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * Connection to DB, change $servername, $username and $password as you want
+ */
 $servername = "localhost";
 $username = "root";
 $password = "";

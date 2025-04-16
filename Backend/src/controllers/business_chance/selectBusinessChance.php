@@ -3,6 +3,10 @@
     include "../../database/DB.module.php";
     include "../../services/auth/jwt.Module.php";
 
+    /**
+     * Select BusinessChance Controller
+     */
+
     if ($_SERVER['REQUEST_METHOD']=="POST") {
         checkAuth();
 

@@ -4,6 +4,9 @@
     include "../../services/auth/jwt.Module.php";
     include "../../dto/userLoginResp.dto.php";
 
+    /**
+     * Login User Controller
+     */
     if ($_SERVER['REQUEST_METHOD']=="POST") {
         $user=getUserRequest();
 

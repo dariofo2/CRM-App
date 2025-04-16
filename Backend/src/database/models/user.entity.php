@@ -1,4 +1,7 @@
 <?php
+    /**
+     * User Entity of Database
+     */
     class User {
         public ?int $id;
         public ?string $email;

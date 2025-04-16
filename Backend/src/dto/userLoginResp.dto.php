@@ -1,4 +1,8 @@
 <?php
+    /**
+     * Data Transfer Object of UserLogin Response with jwtToken 
+     * password is always given as null cause Security Breachs
+     */
     class UserLoginResp {
         public ?int $id;
         public ?string $email;

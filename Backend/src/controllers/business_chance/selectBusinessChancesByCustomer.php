@@ -3,6 +3,9 @@
     include "../../database/DB.module.php";
     include "../../services/auth/jwt.Module.php";
 
+    /**
+     * Select BusinessChances By CustomerId Controller
+     */
     if ($_SERVER['REQUEST_METHOD']=="POST") {
         checkAuth();
         
